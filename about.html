@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DFT | Alumini</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <style>
+        :root {
+            --shade1: #f72585;
+            --shade2: #7209b7;
+            --shade3: #3a0ca3;
+            --shade4: #4361ee;
+            --shade5: #d9f6ff;
+        }
+
+        .bgshade1 {
+            background-color: var(--shade3);
+            color: white;
+        }
+
+        .text-justify {
+            text-align: justify;
+        }
+
+        body {
+            font-family: "Noto Sans", sans-serif;
+            overflow: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 5px 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links li {
+            list-style: none;
+            margin: 0 12px;
+        }
+
+        .nav-links li a {
+            position: relative;
+            color: #333;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 6px 0;
+            text-decoration: none;
+        }
+
+        .nav-links li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: #000000;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links li a:hover:before,
+        .nav-links li a.active:before {
+            width: 100%;
+        }
+
+        .nav-links li.forward a:before {
+            width: 100%;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-links li.forward a:hover:before,
+        .nav-links li.forward a.active:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links li a.active {
+            color: #000;
+            font-weight: 700;
+        }
+
+
+        .brandlogo {
+            -webkit-filter: drop-shadow(1px 1px 1px #545454);
+            filter: drop-shadow(1px 1px 1px #545454);
+        }
+
+        .gradientbg {
+            background: linear-gradient(to bottom, transparent, #d9f6ff, #fff);
+        }
+
+        .shining-text {
+            background: linear-gradient(90deg, #000, #646464, #000);
+            background-size: 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 2s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 200%;
+            }
+        }
+
+        .aimimage {
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+            opacity: 0.2;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar -->
+    <div class="container-fluid bgshade1 shadow d-flex justify-content-between align-items-center">
+        <p class="pt-2">DFT Alumni Family, Bhavnagar | Since : 1983</p>
+        <a style="text-decoration: none; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#loginmodal">Login</a>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <img class="img-fluid" src="assets/dftlogo.png" width="100px">
+                    </div>
+                    <div class="form-title text-center">
+                        <h4 class="py-3">Login</h4>
+                    </div>
+                    <div class="d-flex flex-column text-center">
+                        <form>
+                            <div class="form-group my-3">
+                                <input type="email" class="form-control" id="email1"
+                                    placeholder="Your email address...">
+                            </div>
+                            <div class="form-group my-3">
+                                <input type="password" class="form-control" id="password1"
+                                    placeholder="Your password...">
+                            </div>
+                            <button type="button" class="btn btn-info container rounded-pill">Login</button>
+                        </form>
+
+                        <div class="text-center text-muted my-3">or use a social network</div>
+                        <div class="d-flex justify-content-center social-buttons">
+                            <button type="button" class="btn btn-secondary rounded-pill mx-1" data-toggle="tooltip"
+                                data-placement="top" title="Twitter">
+                                <i class="bi bi-twitter-x"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary rounded-pill mx-1" data-toggle="tooltip"
+                                data-placement="top" title="Facebook">
+                                <i class="bi bi-facebook"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary rounded-pill mx-1" data-toggle="tooltip"
+                                data-placement="top" title="Linkedin">
+                                <i class="bi bi-linkedin"></i>
+                            </button>
+                            </di>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <div class="signup-section">Not a member yet? <a href="#" class="text-info"> Sign Up</a>.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar for Laptop Device -->
+    <nav class="navbar navbar-expand-lg sticky sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand nav-links d-lg-none" href="index.html">
+                <img src="assets/dftlogo.png" class="brandlogo" alt="DFT Alumni" width="100">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 nav-links mb-lg-0 justify-content-evenly align-items-center w-100">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active forward" href="about.html">About DFT Alumni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="registration.html">Registration</a>
+                    </li>
+                    <a class="navbar-brand d-none d-lg-block" href="index.html">
+                        <img src="assets/dftlogo.png" class="brandlogo mr-4 ml-4" alt="DFT Alumni" width="100">
+                    </a>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="alumini.html">Notable Alumni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="contact.html">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid py-4 text-center">
+        <div class="container">
+            <h1 class="fw-bold shining-text">About Us</h1>
+            <p class="text-justify pt-4">We are a group of professionals passed out from Diploma in Fabrication
+                Technology (DFT), Sir Bhavsinhji Polytechnic institute, Bhavnagar, Gujarat. Diploma in Fabrication
+                Technology is a specialized branch which prepares the students in the core area of Fabrication &
+                Welding. Our Alumni are Business Professionals & Working with reputable companies across the world like
+                Larsen & Toubro, Reliance Group, GMM Pfaudler, Inox Group, TEMA, ISGEC, Godrej, Adani Group, Anup
+                Engineering, SGS, TUV etc.</p>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Mobile Screen -->
+        <div class="d-lg-none">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-center border-0">
+                        <div class="card-body">
+                            <h1 class="card-title shining-text fw-bold pb-3" style="font-size: 50px;">Vision</h1>
+                            <p class="card-text">To promote good will and sense of pride to alumni and students. To help
+                                and support alumni to develop and spread entrepreneurial mind-set among students. To
+                                advice and conduct activities that shall motivate and upgrade skill sets.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center border-0">
+                        <div class="card-body">
+                            <h5 class="card-title shining-text fw-bold pb-3" style="font-size: 50px;">Mission</h5>
+                            <p class="card-text">To create a lifelong and worldwide community of DFT alumni through
+                                increased opportunities for meaningful engagement in order to increase networking,
+                                volunteer involvement in social work and commitment to DFTians.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Laptop Screen -->
+        <div class="d-none d-lg-block">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-dark border-0 text-center">
+                        <img src="assets/aboutpage/aim/1.jpg" class="card-img img-fluid aimimage">
+                        <div class="card-img-overlay d-flex flex-column justify-content-center">
+                            <h1 class="card-title fw-bold text-center shining-text">Vision
+                            </h1>
+                            <p class="card-text">To promote good will and sense of pride to alumni and students. To help
+                                and support alumni to develop and spread entrepreneurial mind-set among students. To
+                                advice and conduct activities that shall motivate and upgrade skill sets.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-dark border-0 text-center">
+                        <img src="assets/aboutpage/aim/2.jpg" class="card-img aimimage">
+                        <div class="card-img-overlay d-flex flex-column justify-content-center">
+                            <h1 class="card-title fw-bold text-center shining-text">
+                                Mission
+                            </h1>
+                            <p class="card-text">To create a lifelong and worldwide community of DFT alumni through
+                                increased opportunities for meaningful engagement in order to increase networking,
+                                volunteer involvement in social work and commitment to DFTians.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h1 class="fw-bold text-center shining-text py-4" style="font-size: 45px;">Purpose of DFT Alumni Association
+            </h1>
+            <div class="d-flex justify-content-center py-4">
+                <div class="card text-center border-0">
+                    <div class="card-header border-0 rounded-3">
+                        <h1 class="fw-bold py-4 text-center shining-text" style="font-size: 30px;">Alumni Commitiee</h1>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush list-group-numbered">
+                            <li class="list-group-item">To establish network among industries and alumni.</li>
+                            <li class="list-group-item">To improve the business network among the alimni enterpreneura.
+                            </li>
+                            <li class="list-group-item">Update the alumni about the tectological Advancement in the
+                                field of welding and fabrication.</li>
+                            <li class="list-group-item">Provide assistance to alumni who are seeking / update the job
+                                profile.</li>
+                            <li class="list-group-item">Recognize and reward the achivements by almuni in different
+                                fields.</li>
+                            <li class="list-group-item">Organise annual alumni event / meeting which will help the
+                                association say connected with alma matter.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center py-4">
+                <div class="card text-center border-0">
+                    <div class="card-header border-0 rounded-3">
+                        <h1 class="fw-bold py-4 text-center shining-text" style="font-size: 30px;">Alumni & DFT
+                            Aspirants</h1>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush list-group-numbered">
+                            <li class="list-group-item">Provide technical support, assistance and guidance to DFT
+                                aspirates through industry visit, workshop and expert sessions.</li>
+                            <li class="list-group-item">Create bridge between DFT aspirates and alumni for career
+                                opportunity and growth.</li>
+                            <li class="list-group-item">Motivate the meritorius student by felicitating with gold medals
+                                to the final year students.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center py-4">
+                <div class="card text-center border-0">
+                    <div class="card-header border-0 rounded-3">
+                        <h1 class="fw-bold py-4 text-center shining-text" style="font-size: 30px;">Conduct CSR
+                            Activities in association with Alumni’s Venture</h1>
+                    </div>
+                    <div class="card-body">
+                        <ol class="list-group list-group-flush list-group-numbered">
+                            <li class="list-group-item">Conducting volunteer activities focusing on social and
+                                environmental issues.</li>
+                            <li class="list-group-item">Organizing Hackathon by inviting following proposals:</li>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">To reduce the carbon foot prints</li>
+                                <li class="list-group-item">To use eco-friendly products, and</li>
+                                <li class="list-group-item">To increase non-traditional transportation (EV)</li>
+                            </ul>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container pb-4">
+        <h1 class="fw-bold shining-text pb-4" style="font-size: 45px;">From the Founder's Desk</h1>
+        <div class="d-flex justify-content-center">
+            <div class="card py-4 border-0">
+                <div class="row g-0">
+                    <div class="col-md-5 text-center">
+                        <img src="assets/aboutpage/AcharyaSir.jpg" class="img-fluid rounded-3 mb-3"
+                            style="width: auto; height: 425px; box-shadow: 5px 5px 10px#000;">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <p class="card-text text-justify">Welcome to the Fabrication Family! We're all about
+                                continuous growth, a
+                                positive mindset, technology advancement, sustainable living, and personal well-being.
+                            </p>
+                            <p class="card-text text-justify">
+                                We constantly upgrade ourselves to stay ahead in the industry, adopting innovative
+                                techniques and investing in R&D. With a positive attitude, we embrace challenges, foster
+                                collaboration, and celebrate achievements. Our success is a result of our united
+                                efforts.
+                            </p>
+                            <p class="card-text text-justify">
+                                Technology is at the heart of what we do. We keep up with the latest advancements,
+                                ensuring we deliver cutting-edge solutions to our clients. We as a Fabrication family
+                                members I quote <b>"Never say CHALSE to quality"</b>
+                            </p>
+                            <p class="card-text text-justify">
+                                Learning is a lifelong journey, and we're committed to it. Through training programs and
+                                knowledge sharing, we empower our team to grow and excel. We care about your well-being.
+                                We promote work-life balance and provide resources for physical and mental health
+                                support.
+                            </p>
+                            <p class="card-text text-justify">
+                                Join us as we embark on an exciting journey of growth, innovation, and personal strength
+                                because <b>सर्व के शुभ में स्व शुभ समाया हुआ है।</b> Together, we'll shape a brighter
+                                future of
+                                s Fabrication industries.
+                            </p>
+                            <h5 class="float-end fw-bold">- Dr. G. D. Acharya</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <hr>
+        <div class="card border-0">
+            <div class="card-body">
+                <p class="card-text text-justify">Count down starts for the alumni meet ...It's immense pleasure to know
+                    that, BPTI
+                    alumni and especially the alumni meet by fabrication technology students has been scheduled on 18th
+                    of June, 2023. It will be a matter of great pleasure to witness tide of emotions amongst the old
+                    friends. Much mellowed jovial incidences of bygone time will be on platter for all of us.</p>
+                <p>
+                    Actually Alumni association is a backbone for any institution, which can extend warm support to the
+                    institute on facets like placements, trainings, industrial visits etc. Alumni can also adopt
+                    economically challenged students and extend them financial help to shape their career in the best
+                    possible ways. Industrialists amongst alumni can extend their CSR funding to thier Alma mater (
+                    Mother institute) for enhancing or upgrading technological infrastructure to make it unique.
+                </p>
+                <p>
+                    I, hereby, convey my best wishes to all the alumni likely to get gravitated at Ahmedabad venue, for
+                    the most coveted event and anticipate fruitful outcome of this meet for our most beloved BPTI.
+                </p>
+                <p>
+                    On behalf of BPTI family, I welcome you all with tons of love and affection... &#127801; &#127801;
+                </p>
+                <h5 class="float-end fw-bold text-end">- Dr A S Pandya<br> Principal, BPTI<br> Bhavnagar</h5>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <hr>
+        <div class="card border-0">
+            <div class="card-body">
+                <h4>Dear DFT alumnae,</h4>
+                <p class="card-text text-justify">It is great pleasure to address you all as Head of department of
+                    Fabrication Technology. I hope that you all are well. With the tremendous efforts from Dr. G. D.
+                    Acharya Sir, Mr. Maheshbhai Patel, Mr. Hareshbhai Mandaliya and all alumnae, finally we have
+                    arranged a grand meet at ahmedabad on 18/06/2023.
+                </p>
+                <p class="card-text text-justify">
+                    As we all know, Fabrication Technology Department is completing 40 years of establishment in 2023.
+                    We have completed 36 successful pass out batches working in India and abroad. We all are nurture
+                    with the slogan “ NEVER SAY ચાલશે TO QUALITY”. Our alumnae are our brand ambassador. Fabrication
+                    Technology branch is famous in all the industries because of extreme hard work, qualitative output
+                    and positive attitude of our students. The legacy of the Guru – Shisya and Indian culture is well
+                    maintained in the department even today. We all are trained very hard by our teachers and specially
+                    Dr. G.D. Acharya Sir. I want to draw your kind attention that this year department has successfully
+                    placed all the job seeker students with very good starting package upto 3.3 lakh. Print media has
+                    also taken note of our achievements. We all are very well aware of current scenario of students for
+                    taking admission in information technology and computer branch. It the duty of every alumnae that he
+                    / she must promote our job giver branch in the society. Today the social media become a powerful
+                    platform to convey the messages and world become a global village. Your achievement is very much
+                    precious for the department. I hope that you will support our department by positive campaigning and
+                    spreading awareness of what is actual fabrication technology branch. You can share your knowledge
+                    with current students by visiting the department or by online mode. Together we can serve better to
+                    the society.</p>
+                <p class="card-text text-justify">
+                    I congratulate all the alumnae for a successful arrangement of meet. I hope that this golden
+                    memories will remain like long lasting blossom. GOD bless you all and invite you all to visit our
+                    beloved institute and the department at your convenience.
+                </p>
+                <h5 class="float-end fw-bold text-end">- Samirbhai Y. Merchant<br>
+                    Head of Department (I/C)<br>
+                    Fabrication Technology<br>
+                    Department Sir Bhavsinhji<br>
+                    Polytechnic institute<br>
+                    Bhavnagr - 364001
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <hr>
+        <div class="card border-0">
+            <div class="card-body">
+                <h4>Dear Alumni,</h4>
+                <p class="card-text text-justify">
+                    Warm greetings from the Nilesh M Bhangale, Lecturer in Fabrication
+                    technology department and Training and Placement Office at sir BPTI Bhavnagar.
+                </p>
+                <p>
+                    It gives us immense pleasure to announce that the long-awaited DFT Alumni Meet 2023 is just around
+                    the corner. As we prepare to reconnect with our remarkable alumni network, we wanted to take a
+                    moment to express our gratitude for the indelible mark you have left on our institution and the
+                    significant contributions you have made in your respective fields.
+                </p>
+                <p>
+                    The Alumni Meet, scheduled for 18-6-2023 at Ahmedabad, will be a joyous occasion to celebrate
+                    memories, foster meaningful connections, and inspire the bright futures of our current students.
+                    This event will serve as a testament to the strong bonds we share as members of the Fab. Tech.
+                    family.
+                </p>
+                <p>
+                    Fabrication technology started in 1983 and first batch passed in 1987 since then, the student of
+                    Fabrication technology department getting placement in various esteemed organization and department
+                    have remarkable placement records.
+                </p>
+                <p>
+                    With the help of the alumni support and our branch unique one year ON Job trainee help the students
+                    to their placement and I am happy to announce that this year 2023 pass out students got the 100 %
+                    placement.
+                </p>
+                <p>
+                    Eger to meet you all in alumni meet.
+                </p>
+                <p>
+                    With warm regards
+                </p>
+                <h5 class="float-end fw-bold text-end">- Nilesh M. Bhangale<br>
+                    Lecturer in Fabrication Technology Department<br>
+                    Training and Placement Officer<br>
+                    Sir Bhavsinhji Polytechnic Institute Bhavnagar<br>
+                    Polytechnic institute,<br>
+                    Bhavnagr - 364001
+                </h5>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container-fluid gradientbg">
+        <div class="container">
+            <h1 class="fw-bold py-4 text-center shining-text" style="font-size: 50px;">Alumni Commitiee</h1>
+            <div class="row justify-content-evenly">
+                <div class="col-lg-3">
+                    <div class="card bg-transparent border-0 text-center justify-content-center">
+                        <div class="card-header bg-transparent d-flex justify-content-center" style="border: none;">
+                            <img src="assets/aboutpage/commitee/1.png" class="aluminiimage">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mr. Haresh Mandaliya</h5>
+                            <p class="card-text">
+                            <p>President</p>
+                            <p>DFT Batch (1983)</p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card bg-transparent border-0 text-center justify-content-center">
+                        <div class="card-header bg-transparent d-flex justify-content-center" style="border: none;">
+                            <img src="assets/aboutpage/commitee/2.png" class="aluminiimage">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mr. Mahesh Patel</h5>
+                            <p class="card-text">
+                            <p>Secretary</p>
+                            <p>DFT Batch (1991)</p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card bg-transparent border-0 text-center justify-content-center">
+                        <div class="card-header bg-transparent d-flex justify-content-center" style="border: none;">
+                            <img src="assets/aboutpage/commitee/3.png" class="aluminiimage">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mr. Ashok Pansuriya</h5>
+                            <p class="card-text">
+                            <p>Treasurer</p>
+                            <p>DFT Batch (1989)</p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="text-center text-white" style="background-color: var(--shade3)">
+        <div class="container">
+            <section>
+                <div class="row text-center d-flex justify-content-center pt-4">
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="index.html" class="text-white" style="text-decoration: none;">Home</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="about.html" class="text-white" style="text-decoration: none;">About DFT Alumini</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="registration.html" class="text-white"
+                                style="text-decoration: none;">Registration</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="alumini.html" class="text-white" style="text-decoration: none;">Notable Alumini</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="gallery.html" class="text-white" style="text-decoration: none;">Gallery</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="contact.html" class="text-white" style="text-decoration: none;">Contact Us</a>
+                        </h6>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <hr>
+        <section class="mb-4 text-center">
+            <!-- Facebook -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1"
+                href="https://www.facebook.com/dftalumnifamily/?ref=py_c&paipv=0&eav=AfaYrxw2A4fB1haaxssTV66KRPz9nWjlJxWYZMQvpLYhccuVhPy-mRV5VpShnPm_xUM&_rdr"
+                target="_blank" role="button"><i class="bi bi-facebook fs-3"></i></a>
+
+            <!-- Youtube -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1"
+                href="https://www.youtube.com/@DFTAlumniFamily/videos" target="_blank" role="button"><i
+                    class="bi bi-youtube fs-3"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1" href="https://www.instagram.com/dftalumnifamily/"
+                target="_blank" role="button"><i class="bi bi-instagram fs-3"></i></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1"
+                href="https://www.linkedin.com/company/dft-alumni/?originalSubdomain=in" target="_blank"
+                role="button"><i class="bi bi-linkedin fs-3"></i></a>
+        </section>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2024 Copyright: All Rights Reserved DFT Alumni Family<a class="text-white"
+                href="https://mdbootstrap.com/"></a>
+        </div>
+        <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
+            <sub>Designed and Developed with &#10084; by <a href="https://megh2711.github.io/meghthebaadal.com/"
+                    style="text-decoration: none; color: #fff;"><b>Megh
+                        Patel</b></a></sub>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

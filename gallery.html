@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DFT | Alumini</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <style>
+        :root {
+            --shade1: #f72585;
+            --shade2: #7209b7;
+            --shade3: #3a0ca3;
+            --shade4: #4361ee;
+            --shade5: #d9f6ff;
+        }
+
+        .bgshade1 {
+            background-color: var(--shade3);
+            color: white;
+        }
+
+        .text-justify {
+            text-align: justify;
+        }
+
+        body {
+            font-family: "Noto Sans", sans-serif;
+            overflow: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 5px 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links li {
+            list-style: none;
+            margin: 0 12px;
+        }
+
+        .nav-links li a {
+            position: relative;
+            color: #333;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 6px 0;
+            text-decoration: none;
+        }
+
+        .nav-links li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: #000000;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links li a:hover:before,
+        .nav-links li a.active:before {
+            width: 100%;
+        }
+
+        .nav-links li.forward a:before {
+            width: 100%;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-links li.forward a:hover:before,
+        .nav-links li.forward a.active:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links li a.active {
+            color: #000;
+            font-weight: 700;
+        }
+
+
+        .brandlogo {
+            -webkit-filter: drop-shadow(1px 1px 1px #545454);
+            filter: drop-shadow(1px 1px 1px #545454);
+        }
+
+        .gradientbg {
+            background: linear-gradient(to bottom, #fff, #d9f6ff, #fff);
+        }
+
+        .aluminiimage {
+            width: 250px;
+        }
+
+        .shining-text {
+            background: linear-gradient(45deg, #000, #646464, #000);
+            background-size: 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 2s linear infinite;
+        }
+
+        .closedtext {
+            background: linear-gradient(45deg, #c32b2b, #ff3131, #c32b2b);
+            background-size: 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 2s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 200%;
+            }
+        }
+
+        .enlarge {
+            transition: transform 0.3s ease;
+        }
+
+        .enlarge:hover {
+            transform: scale(1.025);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar -->
+    <div class="container-fluid bgshade1 shadow d-flex justify-content-between align-items-center">
+        <p class="pt-2">DFT Alumni Family, Bhavnagar | Since : 1983</p>
+        <a style="text-decoration: none; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#loginmodal">Login</a>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <img class="img-fluid" src="assets/dftlogo.png" width="100px">
+                    </div>
+                    <div class="form-title text-center">
+                        <h4 class="py-3">Login</h4>
+                    </div>
+                    <div class="d-flex flex-column text-center">
+                        <form>
+                            <div class="form-group my-3">
+                                <input type="email" class="form-control" id="email1"
+                                    placeholder="Your email address...">
+                            </div>
+                            <div class="form-group my-3">
+                                <input type="password" class="form-control" id="password1"
+                                    placeholder="Your password...">
+                            </div>
+                            <button type="button" class="btn btn-info container rounded-pill">Login</button>
+                        </form>
+
+                        <div class="text-center text-muted my-3">or use a social network</div>
+                        <div class="d-flex justify-content-center social-buttons">
+                            <button type="button" class="btn btn-secondary rounded-pill mx-1" data-toggle="tooltip"
+                                data-placement="top" title="Twitter">
+                                <i class="bi bi-twitter-x"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary rounded-pill mx-1" data-toggle="tooltip"
+                                data-placement="top" title="Facebook">
+                                <i class="bi bi-facebook"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary rounded-pill mx-1" data-toggle="tooltip"
+                                data-placement="top" title="Linkedin">
+                                <i class="bi bi-linkedin"></i>
+                            </button>
+                            </di>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <div class="signup-section">Not a member yet? <a href="#" class="text-info"> Sign Up</a>.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar for Laptop Device -->
+    <nav class="navbar navbar-expand-lg sticky sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand nav-links d-lg-none" href="index.html">
+                <img src="assets/dftlogo.png" class="brandlogo" alt="DFT Alumni" width="100">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 nav-links mb-lg-0 justify-content-evenly align-items-center w-100">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About DFT Alumni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="registration.html">Registration</a>
+                    </li>
+                    <a class="navbar-brand d-none d-lg-block" href="index.html">
+                        <img src="assets/dftlogo.png" class="brandlogo mr-4 ml-4" alt="DFT Alumni" width="100">
+                    </a>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="alumini.html">Notable Alumni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active forward" aria-disabled="true" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" href="contact.html">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 class="fw-bold shining-text text-center py-4">Gallery</h1>
+    <div class="container pb-4">
+        <h5 class="fw-bold shining-text pb-4">DFT Alumni Family Meet 2023, Ahmedabad</h5>
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img1.52a3ceeb2d4d1297a890.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img2.0f4e5a747764c3a45e58.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img3.de54a0f0b3d93735c912.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img4.fcba054fdf77e1ff43d0.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img5.c32497b0ff856b9d732d.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img6.94970600d90c8cd5bdb8.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img7.f3515bb1a5ae405faa84.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img8.d8e4c60f095641d15ed1.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img9.b0875365f6a3fd4f0a59.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img12.71b0d6794d2c17719c09.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img13.1c9156f7f831897b8bd5.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img14.c4ff5f96c5d7a08bef41.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img15.f996ea452662dd096d11.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img17.d491c3397194c4eb99f6.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img18.3f24a575a322f9b4211d.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img19.137638c807149c6b246b.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img20.32c43af57ede20e4d1a8.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img23.48712260872dd78c03e6.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img24.6ae19fecc95e6246a205.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img25.4996869081ff41a2cc7d.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img26.d7d8ef868e5db3f2efe7.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img27.e02b7ad3c323b94bc710.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img28.1c2c34911f461bad3709.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img29.9ff96b27a8bb5bd3bdfe.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img30.325d178ac27acba36e9e.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img31.4eda34a39c78595d52c5.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img32.f57a05a205771dc4a752.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img33.93a687399d302b1a5cd6.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img34.9ab305e8ae48ca6fb887.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img35.0de39cb592da27143fee.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img36.ec5978b327e2a9a3bfb7.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img37.14e87370b8674617b646.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img38.1d1d6ef8af7d8db1490f.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img39.25c34bd82bd053bbb1ac.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img40.12a32c5451b0e815bf43.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img41.4859fc7c8b3c42fb77ef.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img42.7801acda37822451ac73.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img43.67816e2e0cd4dcd498ef.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img44.f139702d4590e53a6cc9.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img45.a2b953a92447242bbb65.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img46.cd7138867707ad66d560.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img47.d7ffdd76f039ac91325b.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img48.3cf486fb30193250aa79.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img49.0cc60915077d0b580a18.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img50.26e230c793f435e1d0e5.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img51.0c3ba1145a2c4bdcdfd4.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img52.754a7926a6d74b0ce24f.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img53.ae15a0bea8aff97f1369.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img54.f4101a0f0ae141fe2608.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img55.e9ddd30a4941fb085183.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img56.400a5ab646615bbeb822.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img57.df5a38f1f4f6693becbb.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img58.1881977349a09d7702f0.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img59.eb336c6cbe705ef89e7d.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img60.415671e4a0549def32a2.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img61.7fbb1434d06b117e8ddd.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img62.4e055fe5c8ca0d752f28.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img63.240eb5516b95f76d4093.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img64.fa60e1b04414755ce766.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img65.d958802b9ea3b9e2c9fc.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img66.b00bc4aed99183b25911.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img67.91db28018b372b8e7b8b.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img68.575662a18acaeaec373c.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img69.d05e8e01a9fa1bac652e.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img70.8ac4a441ddabf0440bdf.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img71.973315dc56fae86ac254.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img72.bddde18d095fd6930fcf.png">
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <img class="img-fluid rounded-3 enlarge mb-2"
+                    src="https://dftalumnifamily.com/static/media/img73.65db8866e347a49f3fbe.png">
+            </div>
+        </div>
+    </div>
+    <div class="container py-4">
+        <div class="card border-0">
+            <div class="card-body text-center">
+                <h5>DFT Alumni Family Meet 2023 Images</h5>
+                <a class="btn btn-primary mt-3"
+                    href="https://drive.google.com/drive/folders/1tD1D3JLwfpTRfXNazeiiDh3SQ2dq9qYi" target="_blank">Drive Link</a>
+            </div>
+        </div>
+    </div>
+    <footer class="text-center text-white" style="background-color: var(--shade3)">
+        <div class="container">
+            <section>
+                <div class="row text-center d-flex justify-content-center pt-4">
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="index.html" class="text-white" style="text-decoration: none;">Home</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="about.html" class="text-white" style="text-decoration: none;">About DFT Alumini</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="registration.html" class="text-white"
+                                style="text-decoration: none;">Registration</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="alumini.html" class="text-white" style="text-decoration: none;">Notable Alumini</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="gallery.html" class="text-white" style="text-decoration: none;">Gallery</a>
+                        </h6>
+                    </div>
+                    <div class="col-md-2 my-1">
+                        <h6 class="font-weight-bold">
+                            <a href="contact.html" class="text-white" style="text-decoration: none;">Contact Us</a>
+                        </h6>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <hr>
+        <section class="mb-4 text-center">
+            <!-- Facebook -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1"
+                href="https://www.facebook.com/dftalumnifamily/?ref=py_c&paipv=0&eav=AfaYrxw2A4fB1haaxssTV66KRPz9nWjlJxWYZMQvpLYhccuVhPy-mRV5VpShnPm_xUM&_rdr"
+                target="_blank" role="button"><i class="bi bi-facebook fs-3"></i></a>
+
+            <!-- Youtube -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1"
+                href="https://www.youtube.com/@DFTAlumniFamily/videos" target="_blank" role="button"><i
+                    class="bi bi-youtube fs-3"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1" href="https://www.instagram.com/dftalumnifamily/"
+                target="_blank" role="button"><i class="bi bi-instagram fs-3"></i></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-light border-0 btn-floating m-1"
+                href="https://www.linkedin.com/company/dft-alumni/?originalSubdomain=in" target="_blank"
+                role="button"><i class="bi bi-linkedin fs-3"></i></a>
+        </section>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2024 Copyright: All Rights Reserved DFT Alumni Family<a class="text-white"
+                href="https://mdbootstrap.com/"></a>
+        </div>
+        <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
+            <sub>Designed and Developed with &#10084; by <a href="https://megh2711.github.io/meghthebaadal.com/"
+                    style="text-decoration: none; color: #fff;"><b>Megh
+                        Patel</b></a></sub>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
